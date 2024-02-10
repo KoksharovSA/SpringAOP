@@ -22,7 +22,7 @@ public class PurchaseService {
         return purchaseRepository.findById(id).orElseThrow(null);
     }
 
-    public void addProduct(Product product){
-        purchaseRepository.save(product);
+    public void addPurchase(Purchase purchase){
+        purchaseRepository.save(purchase);
     }
 }
