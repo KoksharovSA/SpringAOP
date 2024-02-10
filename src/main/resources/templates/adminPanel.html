@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель управления</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="text-white bg-dark">
+
+        <ul class="nav nav-pills red d-flex">
+            <li class="m-2 nav-item me-auto">
+                <h3 class="nav">Панель управления</h3>
+            </li>
+            <li class="m-2 nav-item">
+                <a class="nav-link link-light" aria-current="page" href="/index">Главная страница</a>
+            </li>
+            <li class="m-2 nav-item">
+                <a class="nav-link active" aria-current="page" href="/adminPanel">Панель управления</a>
+            </li>
+            <li sec:authorize="!isAuthenticated()" class="m-2 nav-item">
+                <form th:action="@{/loginPage}" method="get">
+                    <button type="submit" class="btn btn-success">Авторизация</button>
+                </form>
+            </li>
+            <li sec:authorize="isAuthenticated()" class="m-2 nav-item">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-warning">Выйти</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+    <br>
+    <div class="position-absolute start-50 translate-middle-x">
+        <h3>Добавить товар</h3>
+        <form th:action="@{/addProduct}" method="post">
+            <div class="mb-3">
+                <label class="form-label">Название товара</label>
+                <input type="text" class="form-control" name="name">
+                <div class="form-text">Введите название товара</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Описание товара</label>
+                <input type="text" class="form-control" name="description">
+                <div class="form-text">Введите описание товара</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Картинка</label>
+                <input type="text" class="form-control" name="pictureUrl">
+                <div class="form-text">Введите ссылку картинки товара</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Цена товара</label>
+                <input type="number" class="form-control" name="price">
+                <div class="form-text">Введите цену товара</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Добавить товар</button>
+        </form>
+    </div>
+</body>
+</html>
