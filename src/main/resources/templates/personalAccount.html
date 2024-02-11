@@ -20,7 +20,7 @@
             <a class="nav-link link-light" aria-current="page" href="/index">Главная страница</a>
         </li>
         <li class="m-2 nav-item" sec:authorize="hasRole('USER')">
-            <a class="nav-link link-light" aria-current="page" href="/personalAccount">Личный кабинет <span th:text="${user}">user</span></a>
+            <a class="nav-link link-light active" aria-current="page" href="/personalAccount">Личный кабинет <span th:text="${user}">user</span></a>
         </li>
         <li class="m-2 nav-item" sec:authorize="hasRole('ADMIN')">
             <a class="nav-link link-light" aria-current="page" href="/adminPanel">Панель управления <span th:text="${user}">user</span></a>
@@ -43,16 +43,18 @@
     </div>
     <br>
     <div class="d-flex flex-row flex-wrap">
-        <div th:each="p: ${products}">
+        <div th:each="p: ${purchases}">
             <div class="card m-3" style="width: 18rem; height: 26rem">
-                <div class="justify-content-center" style="width: 17rem; height: 17rem">
-                    <img th:src="${p.pictureUrl}" class="card-img-top" alt="">
+                <div class="justify-content-center  overflow-hidden" style="width: 17rem; height: 10rem;">
+                    <img th:src="${p.pictureUrl}" class="card-img-top" style="width: auto; height: 10rem;" alt="">
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${p.name}"></h5>
-                    <p class="card-text" th:text="${p.description}"></p>
-                    <h3 class="card-title" th:text="${p.price}"></h3>
-                    <a href="#" class="btn btn-danger">Удалить</a>
+                    <h5 class="card-title" th:text="${p.product.name}"></h5>
+                    <p class="card-text" th:text="${p.product.description}"></p>
+                    <h3 class="card-title" th:text="${p.product.price}"></h3>
+                    <form th:action="@{/deletePurchase/}+${p.id}" method="post">
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                    </form>
                 </div>
             </div>
         </div>

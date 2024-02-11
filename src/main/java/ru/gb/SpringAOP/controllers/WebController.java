@@ -26,14 +26,17 @@ public class WebController {
 
     @GetMapping("/adminPanel")
     public String adminPanel(Model model){
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
         model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getName());
         return "adminPanel";
     }
 
     @GetMapping("/personalAccount")
     public String personalAccount(Model model){
-        List<Product> products = purchaseService.getAllProductUser();
-        model.addAttribute("products", products);
+        List<Purchase> products = purchaseService.getAllPurchasesUser();
+        model.addAttribute("purchases", products);
+        model.addAttribute("user", SecurityContextHolder.getContext().getAuthentication().getName());
         return "personalAccount";
     }
 
@@ -75,5 +78,16 @@ public class WebController {
         purchase.setProduct(productService.getProductById(id));
         purchaseService.addPurchase(purchase);
         return "redirect:/index";
+    }
+
+    @PostMapping("/deletePurchase/{id}")
+    public String deletePurchase(@PathVariable("id") Long id){
+        purchaseService.deletePurchaseById(id);
+        return "redirect:/personalAccount";
+    }
+    @PostMapping("/deleteProduct/{id}")
+    public String deleteProduct(@PathVariable("id") Long id){
+        productService.deleteProductById(id);
+        return "redirect:/adminPanel";
     }
 }

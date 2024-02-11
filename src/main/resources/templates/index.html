@@ -45,8 +45,8 @@
     <div class="d-flex flex-row flex-wrap">
         <div th:each="p: ${products}">
             <div class="card m-3" style="width: 18rem; height: 26rem">
-                <div class="justify-content-center" style="width: 17rem; height: 17rem">
-                    <img th:src="${p.pictureUrl}" class="card-img-top" alt="">
+                <div class="justify-content-center  overflow-hidden" style="width: 17rem; height: 10rem;">
+                    <img th:src="${p.pictureUrl}" class="card-img-top" style="width: auto; height: 10rem;" alt="">
                 </div>
                 <div class="card-body">
                     <h5 class="card-title" th:text="${p.name}"></h5>
@@ -57,7 +57,7 @@
                             <button type="submit" class="btn btn-primary" >Купить</button>
                         </form>
                     </div>
-                    <div sec:authorize="isAuthenticated()">
+                    <div sec:authorize="hasRole('USER')">
                         <form th:action="@{/buy/}+${p.id}" method="post">
                             <button type="submit" class="btn btn-primary">Купить</button>
                         </form>

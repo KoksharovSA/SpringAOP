@@ -14,6 +14,6 @@ public class Purchase {
     @Column(nullable = false, length = 2000)
     private String userName;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
 }
