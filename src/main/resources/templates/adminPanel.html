@@ -19,8 +19,11 @@
             <li class="m-2 nav-item">
                 <a class="nav-link link-light" aria-current="page" href="/index">Главная страница</a>
             </li>
-            <li class="m-2 nav-item">
-                <a class="nav-link active" aria-current="page" href="/adminPanel">Панель управления</a>
+            <li class="m-2 nav-item" sec:authorize="hasRole('USER')">
+                <a class="nav-link link-light" aria-current="page" href="/personalAccount">Личный кабинет <span th:text="${user}">user</span></a>
+            </li>
+            <li class="m-2 nav-item" sec:authorize="hasRole('ADMIN')">
+                <a class="nav-link link-light" aria-current="page" href="/adminPanel">Панель управления <span th:text="${user}">user</span></a>
             </li>
             <li sec:authorize="!isAuthenticated()" class="m-2 nav-item">
                 <form th:action="@{/loginPage}" method="get">

@@ -10,6 +10,7 @@ import java.util.List;
  * Класс JPA репозитория для общения с базой данных
  */
 @Repository
+
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
 }

@@ -19,8 +19,11 @@
             <li class="m-2 nav-item">
                 <a class="nav-link link-light" aria-current="page" href="/index">Главная страница</a>
             </li>
-            <li class="m-2 nav-item">
-                <a class="nav-link link-light" aria-current="page" href="/adminPanel">Панель управления</a>
+            <li class="m-2 nav-item" sec:authorize="hasRole('USER')">
+                <a class="nav-link link-light" aria-current="page" href="/personalAccount">Личный кабинет <span th:text="${user}">user</span></a>
+            </li>
+            <li class="m-2 nav-item" sec:authorize="hasRole('ADMIN')">
+                <a class="nav-link link-light" aria-current="page" href="/adminPanel">Панель управления <span th:text="${user}">user</span></a>
             </li>
             <li sec:authorize="!isAuthenticated()" class="m-2 nav-item">
                 <form th:action="@{/loginPage}" method="get">
@@ -35,22 +38,25 @@
         </ul>
     </div>
     <br>
-
-    <form th:action="@{/login}" method="post">
-        <div class="position-absolute start-50 translate-middle-x">
-            <div class="mb-3" style="width: 200px;">
-                <label for="username" class="form-label">Имя пользователя</label>
-                <input type="text" id="username" name="username" class="form-control" >
-                <div id="usernameHelp" class="form-text">Введите имя пользователя.</div>
+    <div sec:authorize="!isAuthenticated()">
+        <form th:action="@{/login}" method="post">
+            <div class="position-absolute start-50 translate-middle-x">
+                <div class="mb-3" style="width: 200px;">
+                    <label for="username" class="form-label">Имя пользователя</label>
+                    <input type="text" id="username" name="username" class="form-control" >
+                    <div id="usernameHelp" class="form-text">Введите имя пользователя.</div>
+                </div>
+                <div class="mb-3" style="width: 200px;">
+                    <label for="password" class="form-label">Пароль</label>
+                    <input type="password" id="password" name="password" class="form-control" >
+                    <div id="passwordHelp" class="form-text">Введите пароль.</div>
+                </div>
+                <button type="submit" class="btn btn-success justify-content-center">Войти</button>
             </div>
-            <div class="mb-3" style="width: 200px;">
-                <label for="password" class="form-label">Пароль</label>
-                <input type="password" id="password" name="password" class="form-control" >
-                <div id="passwordHelp" class="form-text">Введите пароль.</div>
-            </div>
-            <button type="submit" class="btn btn-success justify-content-center">Войти</button>
-        </div>
-    </form>
-
+        </form>
+    </div>
+    <div sec:authorize="isAuthenticated()" class="position-absolute start-50 translate-middle-x">
+        <h3 class="nav green">Вы успешно вошли в систему!</h3>
+    </div>
 </body>
 </html>

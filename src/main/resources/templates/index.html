@@ -19,8 +19,11 @@
             <li class="m-2 nav-item">
                 <a class="nav-link active" aria-current="page" href="/index">Главная страница</a>
             </li>
-            <li class="m-2 nav-item">
-                <a class="nav-link link-light" aria-current="page" href="/adminPanel">Панель управления</a>
+            <li class="m-2 nav-item" sec:authorize="hasRole('USER')">
+                <a class="nav-link link-light" aria-current="page" href="/personalAccount">Личный кабинет <span th:text="${user}">user</span></a>
+            </li>
+            <li class="m-2 nav-item" sec:authorize="hasRole('ADMIN')">
+                <a class="nav-link link-light" aria-current="page" href="/adminPanel">Панель управления <span th:text="${user}">user</span></a>
             </li>
             <li sec:authorize="!isAuthenticated()" class="m-2 nav-item">
                 <form th:action="@{/loginPage}" method="get">
@@ -49,7 +52,16 @@
                     <h5 class="card-title" th:text="${p.name}"></h5>
                     <p class="card-text" th:text="${p.description}"></p>
                     <h3 class="card-title" th:text="${p.price}"></h3>
-                    <a href="#" class="btn btn-primary">Купить</a>
+                    <div sec:authorize="!isAuthenticated()">
+                        <form th:action="@{/loginPage}" method="get">
+                            <button type="submit" class="btn btn-primary" >Купить</button>
+                        </form>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <form th:action="@{/buy/}+${p.id}" method="post">
+                            <button type="submit" class="btn btn-primary">Купить</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

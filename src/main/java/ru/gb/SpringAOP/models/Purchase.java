@@ -4,12 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "products")
+@Table(name = "purchase")
 @Data
 public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 2000)
+    private String userName;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Product product;
