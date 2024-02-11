@@ -20,7 +20,6 @@ public class LoggingAspect {
         Object [] arguments = joinPoint.getArgs();
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         logger.info("Вызван метод " + methodName + " с параметрами " + arguments + " , пользователем " + userName + ".");
-        System.out.println("Вызван метод " + methodName + " с параметрами " + arguments + " , пользователем " + userName + ".");
         Object result = joinPoint.proceed();
         return result;
     }
